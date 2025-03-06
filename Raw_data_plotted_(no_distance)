@@ -1,0 +1,28 @@
+import os
+import matplotlib.pyplot as plt
+
+directory = os.path.dirname(os.path.abspath(__file__))
+
+
+for a in range(1, 33):
+    time = []
+    voltage = []
+    try:
+        with open(os.path.join(directory, "dataset_velocity\\test_" + str(a) + "_gp.csv")) as data:
+            next(data)
+            for line in data:
+                datapoint = line.split(",")
+                time.append(float(datapoint[0]))
+                voltage.append(float(datapoint[1]))
+    except FileNotFoundError:
+        print(f"File test_{a}_gp.csv not found, skipping.")
+        continue
+    plt.subplot(5, 7, a)
+    plt.plot(time,voltage)
+    plt.title(f"Test {a}")
+    plt.xlabel("Time")
+    plt.ylabel("voltage")
+
+
+
+plt.show()
